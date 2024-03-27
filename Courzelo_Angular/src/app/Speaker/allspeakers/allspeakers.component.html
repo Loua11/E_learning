@@ -1,0 +1,54 @@
+<app-sidebar></app-sidebar>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <div class="content-wrapper white-background">
+    <br> <br> <br>
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row justify-content-center"> <!-- Utiliser 'justify-content-center' pour centrer la colonne -->
+  
+          <div class="col-md-8">
+            <div class="card custom-blue">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <span class="font-weight-bold " style="font-size: 1.5rem;color: rgb(8, 8, 8);">Speaker List</span>
+                </div>
+                <div class="ml-auto">
+                  <a routerLink="/addSpeaker"><i class="bi bi-patch-plus-fill text-black" style="font-size: 40px;"></i></a>
+                </div>
+              </div>
+   
+              <div class="card-body">
+          <table  class="table table-hover text-center custom-table">
+          <thead>
+            <tr class="table-info">
+              <th scope="col" class="custom-cell">idspeaker</th>
+              <th scope="col" class="custom-cell">name</th>
+              <th scope="col" class="custom-cell">title</th>              
+              <th scope="col" class="custom-cell">bio</th>
+              <th scope="col" class="custom-cell">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let speaker of speakers">
+              <td class="custom-cell">{{ speaker.idspeaker }}</td>
+              <td class="custom-cell">{{ speaker.name }}</td>
+              <td class="custom-cell">{{ speaker.title }}</td>
+              <td class="custom-cell">{{ speaker.bio }}</td>
+              <td class="custom-cell">
+                <button type="button" class="btn btn-outline-success" routerLink="/updateSpeaker/{{speaker.idspeaker}}">
+                  <i class="fas fa-edit"></i> <!-- Icône de mise à jour -->
+                </button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteSpeaker(speaker.idspeaker)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+                <button type="button" class="btn btn-outline-info" routerLink="/showspeaker/{{speaker.idspeaker}}">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>

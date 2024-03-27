@@ -1,0 +1,38 @@
+
+<app-sidebar></app-sidebar>
+<div class="content-wrapper white-background">
+  <br>
+  <br>
+  <div class="content">
+    <div class="container mt-5 mb-5 d-flex justify-content-center">
+      <div class="card px-1 py-4 turquoise-background position-relative">
+        <div class="card-header d-flex justify-content-center align-items-center">
+          <span class="font-weight-bold" style="font-size: 1.9rem; color: #d7a50deb;">Show Claim</span>
+        </div>
+        <div class="card-body d-flex flex-column align-items-center">
+         
+          <div *ngIf="claimDetails" style="color: black; font-weight: bold;">
+            <div class="form-group">
+                <label class="text-uppercase text-uppercase text-xxs font-weight-bolder opacity-7">Title:</label>
+                <span class="ml-5 font-weight-bold">{{ claimDetails.title }}</span>
+              </div>
+              <div class="form-group">
+                <label class="text-uppercase text-uppercase text-xxs font-weight-bolder opacity-7 ">Date Claim:</label>
+                <span class="ml-5 font-weight-bold">{{ claimDetails.dateclaim }}</span>
+              </div>
+              <div class="form-group">
+                <label class="text-uppercase text-uppercase text-xxs font-weight-bolder opacity-7">Claim Type:</label>
+                <span class="ml-5 font-weight-bold" >{{ claimDetails.typeclaim }}</span>
+              </div>
+              <div class="form-group">
+                <label class="text-uppercase text-uppercase text-xxs font-weight-bolder opacity-7">Status:</label>
+                <span class="ml-5 font-weight-bold" >{{ claimDetails.status }}</span>
+              </div>
+          </div>
+          
+        </div>
+        <a class="btn btn-link btn-lg position-absolute top-0 end-0" style="color: rgb(9, 141, 114);" routerLink="/allclaims">
+          <i class="fas fa-arrow-right fa-2x"></i>
+        </a>
+      </div>
+    </div>

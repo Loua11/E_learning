@@ -1,0 +1,72 @@
+<app-sidebar></app-sidebar>
+<br><br> <br><br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div> <!-- Colonne vide à gauche -->
+    <div class="col-md-8">
+      <div class="card custom-blue">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+                <span class="font-weight-bold " style="font-size: 1.5rem;color: rgb(8, 8, 8);">Lessons List</span>
+              </div>
+              <div class="ml-auto">
+                <a routerLink="/addLesson"><i class="bi bi-patch-plus-fill text-black" style="font-size: 40px;"></i></a>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <table class="table table-hover text-center custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="custom-cell">Title</th>
+                    <th scope="col" class="custom-cell">Content</th>
+                    <th scope="col" class="custom-cell">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let l of lesson">
+                    <td class="custom-cell">{{ l.title}}</td>
+                    <td class="custom-cell">
+                      <ng-container *ngIf="isImage(l)">
+                        <a class="text-success" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
+                          <i class="bi bi-file-image" style="font-size: 25px;"></i> {{ l.content }}
+                        </a>
+                      </ng-container>
+                  
+                      <ng-container *ngIf="isVideo(l)">
+                        <a class="text-danger" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
+                          <i class="bi bi-file-play" style="font-size: 25px;"></i> {{ l.content }}
+                        </a>
+                      </ng-container>
+                  
+                      <ng-container *ngIf="isDocument(l)">
+                        <a class="text-info" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
+                          <i class="bi bi-file-text" style="font-size: 25px;"></i> {{ l.content }}
+                        </a>
+                      </ng-container>
+                  
+                      <!-- Ajoutez d'autres conditions au besoin -->
+                  
+                      <p *ngIf="isSupported(l); else notSupported">
+                         {{ getFileContent(l.content) }}
+                      </p>
+                      <ng-template #notSupported>
+                        <p>Ce type de fichier n'est pas pris en charge.</p>
+                      </ng-template>
+                    </td>
+              
+                  
+                    <td class="custom-cell">
+                      <a routerLink="/updateLesson/{{ l.idlesson }}"><i class="bi bi-pencil-square text-success" style="font-size: 15px;margin-left: 15px;"></i></a>
+                      <a (click)="deleteLesson(l.idlesson)"> <i class="bi bi-trash text-danger" style="font-size: 15px;margin-left: 15px;"></i></a>
+                      <a routerLink="/lesson-details/{{ l.idlesson }}"><i class="bi bi-chat-left-text" style="font-size: 15px;margin-left: 15px;"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
