@@ -11,38 +11,27 @@ export class AllquizzesComponent {
   quizzes?: Quiz[];
   currentQuiz?: Quiz;
   currentIndex = -1;
-  
-  constructor(private quizserv: QuizService) { }
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.retrieveAllQuizzes();
 
   }
+ 
+  constructor(private quizserv: QuizService) { }
  
   
   setActiveQuiz(q: Quiz, index: number): void {
     this.currentQuiz=q;
     this.currentIndex = index;
   }
-  retrieveAllQuizzes(): void {
-    this.quizserv.getAll()
-      .subscribe(
-        data => {
-          
-          this.quizzes = data ;
-          console.log(data);
-        },
-        
-        error => {
-          console.log(error);});
-    
-  }
+
+  
   deleteQuiz(idquiz: string | undefined): void {
     if (idquiz) {
       this.quizserv.deleteQuiz(idquiz).subscribe(
         () => {
           console.log('Quiz with ID ${idquiz} deleted successfully.');
           // Update the class list or perform any necessary actions
-          this.loadQuizzes(); // Reload the updated class list
+          this.retrieveAllQuizzes(); // Reload the updated class list
         },
         (error) => {
           console.error('Error deleting Quiz:', error);
@@ -53,15 +42,18 @@ export class AllquizzesComponent {
       console.error('Quiz ID is undefined. Cannot delete.');
     }
   }
-  loadQuizzes(): void {
-    this.quizserv.getAll().subscribe(
-      (updatedquizzes: any[]) => {
-        this.quizzes = updatedquizzes;
+  retrieveAllQuizzes(): void {
+    this.quizserv.getAll()
+    .subscribe(
+      data => {
+        this.quizzes = data;
+        console.log(data);
       },
-      (error) => {
-        console.error('Error refreshing quiz list:', error);
-        // Handle error scenarios
+      error => {
+        console.log('Erreur complète:', error);
       }
     );
-  }}
+    }    
+}
+
 

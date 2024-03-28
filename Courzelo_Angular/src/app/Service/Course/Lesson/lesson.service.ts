@@ -1,6 +1,6 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Lesson } from 'src/app/models/Lesson/lesson';
 
 @Injectable({
@@ -53,8 +53,23 @@ export class LessonService {
   //   return this.http.get<string>(url);
   // }
   getFileContent(content: string): Observable<any> {
-    const url = `${this.apiUrl}/content/${content}`;
-    return this.http.get(url, { responseType: 'arraybuffer' });
+    return this.http.get<any>(`${this.apiUrl}/content/${content}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching file content:', error);
+        return throwError('Something went wrong while fetching file content');
+      })
+    );
+  }
+  public getApiUrl(): string {
+    return this.apiUrl;
+  }
+
+getFileContentAsArrayBuffer(content: string): Observable<ArrayBuffer> {
+  return this.http.get(`${this.apiUrl}/content/${content}`, { responseType: 'arraybuffer' });
+}
+
+getFileContentAsString(content: string): Observable<string> {
+  return this.http.get(`${this.apiUrl}/content/${content}`, { responseType: 'text' });
 }
 
 

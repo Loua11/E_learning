@@ -20,7 +20,7 @@ export class AllLessonComponent {
     this.currentLesson = c;
     this.currentIndex = index;
   }
- // ...
+ // ... 
 
 // retrieveAllLesson(): void {
 //   this.lessonService.getAll().subscribe(
@@ -63,34 +63,24 @@ export class AllLessonComponent {
 // all-lesson.component.ts
 retrieveAllLesson(): void {
   this.lessonService.getAll().subscribe(
-    (data: Lesson[]) => {
-      console.log('Lesson data from backend:', data);
-      this.lesson = data;
+    (lessons: Lesson[]) => {
+      this.lesson = lessons;
 
       // Récupérer le contenu de chaque fichier
-      const contentRequests = this.lesson.map((lesson: any) =>
-        this.lessonService.getFileContent(lesson.content)
-      );
-
-      forkJoin(contentRequests).subscribe(
-        (contents: string[]) => {
-          // Update each lesson with its corresponding content
-          if (this.lesson) {
-            this.lesson.forEach((lesson, index) => {
-              // Check if 'contents' is not undefined
-              if (contents && contents[index] !== undefined) {
-                lesson.content = contents[index];
-              }
-            });
+      this.lesson.forEach((lesson: Lesson) => {
+        this.lessonService.getFileContent(lesson.content).subscribe(
+          (fileContent: string) => {
+            // Faites ce que vous voulez avec le contenu du fichier ici
+            console.log('File Content:', fileContent);
+          },
+          (error) => {
+            console.error('Error fetching file content:', error);
           }
-        },
-        (error) => {
-          console.error('Error fetching file content:', error);
-        }
-      );
+        );
+      });
     },
     (error) => {
-      console.log(error);
+      console.error('Error fetching lessons:', error);
     }
   );
 }
@@ -213,16 +203,16 @@ getMimeType(fileExtension: string | undefined): string {
   
 }
 getFileContent(content: string): void {
-    this.lessonService.getFileContent(content).subscribe(
-      (fileContent: string) => {
-        console.log('File Content:', fileContent);
-        // Faites ce que vous voulez avec le contenu du fichier ici
-      },
-      (error) => {
-        console.error('Error fetching file content:', error);
-      }
-    );
-  }
+  this.lessonService.getFileContent(content).subscribe(
+    (fileContent: string) => {
+      console.log('File Content:', fileContent);
+      // Faites ce que vous voulez avec le contenu du fichier ici
+    },
+    (error) => {
+      console.error('Error fetching file content:', error);
+    }
+  );
+}
 
 
 getFileExtension(fileName: string): string {

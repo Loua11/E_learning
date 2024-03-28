@@ -1,5 +1,7 @@
 package tn.esprit.devflow.courzelo.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.devflow.courzelo.entity.Question;
@@ -24,8 +26,18 @@ public class QuizService implements IQuizService {
 
     @Override
     public List<Quiz> retrieveAllQuizzes() {
-        return quizrepo.findAll();
+        List<Quiz> quizzes = quizrepo.findAll();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(quizzes);
+            System.out.println(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            // Vous pouvez également logger l'erreur ou faire d'autres traitements ici
+        }
+        return quizzes;
     }
+
 
     @Override
     public Quiz updateQuiz(Quiz q, String idquiz) {

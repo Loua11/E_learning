@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { EventService } from 'src/app/Service/Event/event.service';
 import { Event } from 'src/app/models/Event/event';
 
@@ -11,8 +11,14 @@ import { Event } from 'src/app/models/Event/event';
 })
 export class AlleventsComponent implements OnInit {
   events: Event[] = [];
+  uploadPath: string = 'assets/uploads/';
   eventPhotos: { [key: string]: string } = {};
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
 
+  fileInfos?: Observable<any>;
 
   constructor(private eventService: EventService, private router: Router) {}
 
@@ -21,40 +27,37 @@ export class AlleventsComponent implements OnInit {
     
   }
   
+  selectFile(event:any): void{
+    this.selectedFiles = event.target.files;
 
+  }
   retrieveAllEvents() {
     this.eventService.getAll().subscribe(
-     ( data:Event[]) => {
+      data => {
         this.events = data;
         // Récupérer les photos pour chaque événement
-        const photoRequests = this.events.map((event: any) =>
-        this.eventService.getFileContent(event.photo)
-      );
-
-      forkJoin(photoRequests).subscribe(
-        (photos: string[]) => {
-          // Update each lesson with its corresponding content
-          if (this.events) {
-            this.events.forEach((events, index) => {
-              // Check if 'contents' is not undefined
-              if (photos && photos[index] !== undefined) {
-                events.photo = photos[index];
+        this.events.forEach(event => {
+          if (event && event.idevent && typeof event.idevent === 'string') { 
+            const idevent = event.idevent as string; // Assurez-vous que idevent est de type string
+            // Vérifier si event et event.idevent sont définis et de type string
+            this.eventService.getEventPhoto(idevent).subscribe(
+              photoData => {
+                this.eventPhotos[idevent] = 'data:image/png;base64,' + photoData;
+              },
+              error => {
+                console.error(`Erreur lors du chargement de l'image pour l'événement ${event.idevent} :`, error);
               }
-            });
+            );
           }
-        },
+        });
+      },
       error => {
         console.error('Erreur lors de la récupération des événements :', error);
       }
     );
-     },
-     (error) => {
-      console.log(error);
-    }
-  );
   }
   
-  
+
 
 
   deleteEvent(idevent: string | undefined): void {

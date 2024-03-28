@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { QuestionService } from 'src/app/Service/Evaluation/question.service';
 import { QuizService } from 'src/app/Service/Evaluation/quiz.service';
 import { Question } from 'src/app/models/Evaluation/question';
-import { Quiz, QuizWithQuestionReferences } from 'src/app/models/Evaluation/quiz';
+import { Quiz } from 'src/app/models/Evaluation/quiz';
+
 
 @Component({
   selector: 'app-addquiz',
@@ -12,79 +14,93 @@ import { Quiz, QuizWithQuestionReferences } from 'src/app/models/Evaluation/quiz
 })
 export class AddquizComponent implements OnInit {
   quizForm: FormGroup;
-  availableQuestions: Question[] = [];
-  isQuestionModalVisible: boolean = false; // Utilisé pour contrôler la visibilité de la fenêtre modale
-  selectedQuestionIds: string[] = []; // Stockera les ID des questions sélectionnées
+  questions: Question[] = []; // Assume Question is your model for questions
+  selectedQuestions: { [key: string]: boolean } = {}; // Tracks which questions are selected
 
   constructor(
     private fb: FormBuilder,
     private quizService: QuizService,
-    private route: ActivatedRoute,
+    private questionService: QuestionService,
     private router: Router
   ) {
     this.quizForm = this.fb.group({
       description: ['', Validators.required],
       duration: ['', Validators.required],
       maxScore: ['', Validators.required],
-      // Le contrôle pour questions est maintenant géré séparément, donc il est retiré ici
     });
   }
 
   ngOnInit(): void {
-    this.loadAvailableQuestions();
+    this.loadQuestions();
   }
 
-  loadAvailableQuestions() {
+  loadQuestions(): void {
+    this.questionService.getAllQuestions().subscribe(
+      data => this.questions = data,
+      error => console.error('Error loading questions', error)
+    );
   }
-
-  openQuestionModal(): void {
-    this.isQuestionModalVisible = true;
-    console.log('Question modal should open.'); // Ajoutez ceci pour le debug
+  isChecked: boolean = false;
+  
+  checkBoxChange(questionId: string) {
+    // Ici, vous pouvez gérer la logique à exécuter lorsque l'état de la case à cocher change.
+    // Par exemple, mettre à jour l'objet selectedQuestions avec le nouvel état de la case à cocher.
+    this.selectedQuestions[questionId] = !this.selectedQuestions[questionId];
+    
+    // Logique supplémentaire si nécessaire...
   }
   
 
-  closeQuestionModal(): void {
-    this.isQuestionModalVisible = false; 
-  }
- /* openModel() {
-    const modelDiv = document.getElementById('myModal');
-    if(modelDiv!= null) {
-      modelDiv.style.display = 'block';
-    } 
+  updateSelection(questionId: string, isChecked: boolean): void {
+    this.selectedQuestions[questionId] = isChecked;
   }
 
-  CloseModel() {
-    const modelDiv = document.getElementById('myModal');
-    if(modelDiv!= null) {
-      modelDiv.style.display = 'none';
-    } 
-  }*/
+  saveQuestions(): void {
+    // Collect selected question IDs
+    const selectedQuestionIds = Object.keys(this.selectedQuestions).filter(id => this.selectedQuestions[id]);
 
-  handleQuestionsSelected(selectedIds: string[]): void {
-    this.selectedQuestionIds = selectedIds; 
-    this.closeQuestionModal(); }
+    // Prepare quiz data
+    const newQuiz: Quiz = {
+      ...this.quizForm.value,
+      questions: selectedQuestionIds
+    };
 
-  onSubmit() {
-    if (this.quizForm.valid) {
-      // Créer l'objet Quiz pour l'envoi, qui contient les références aux questions
-      const newQuizWithReferences: QuizWithQuestionReferences = {
-        description: this.quizForm.value.description,
-        duration: Number(this.quizForm.value.duration),
-        maxScore: Number(this.quizForm.value.maxScore),
-        questions: this.selectedQuestionIds.map((id: string) => ({ // Utilisez les ID sélectionnés dans la modale
-          $ref: "question",
-          $id: { $oid: id }
-        }))
-      };
+    // Call service to save new quiz
+    this.quizService.addQuiz(newQuiz).subscribe(
+      () => {
+        console.log('Quiz added successfully!');
+        this.router.navigate(['/allquizzes']);
+        this.closeModel(); // Assuming you have a closeModel method to close the modal
+      },
+      error => console.error('Error adding Quiz', error)
+    );
+  }
 
-      // ... logique existante pour envoyer le nouveau quiz
+  openModel() {
+    const modal = document.getElementById('exampleModalLong');
+    if (modal) {
+      modal.style.display = 'block';
     }
   }
   
+  closeModel() {
+    const modal = document.getElementById('exampleModalLong');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
   
 
-  isFieldInvalid(field: string) {
+  isFieldInvalid(field: string): boolean {
     const control = this.quizForm.get(field);
-    return control && control.touched && control.invalid;
+    return control?.touched && control?.invalid || false;
+  }
+
+  onSubmit(): void {
+    if (this.quizForm.valid) {
+      this.saveQuestions();
+    } else {
+      console.log('Form is invalid. Cannot add Quiz.');
+    }
   }
 }

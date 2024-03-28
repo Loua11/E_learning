@@ -1,5 +1,6 @@
 package tn.esprit.devflow.courzelo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,7 @@ public class Question {
     String correctanswer;
     List<String> options;
 @DBRef
+@JsonIgnore
     Quiz quiz;
 
 }

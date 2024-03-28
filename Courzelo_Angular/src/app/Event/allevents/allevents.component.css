@@ -1,7 +1,6 @@
 .custom-blue {
   background-color: #74cec76e; /* Une couleur entre bleu ciel et bleu turquoise */
-  color: rgb(8, 8, 8);
-  width: 115%; /* Ajustez la largeur selon vos besoins */
+  color: rgb(8, 8, 8); /* Couleur du texte, vous pouvez ajuster selon vos préférences */
 }
 .custom-table .custom-cell {
   background-color: #dcf5f3e5; /* Couleur des cellules du tableau */

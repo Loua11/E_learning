@@ -36,22 +36,19 @@ retrieveEvent(idevent: string): Observable<Event> {
   const url = `${this.apiUrl}/retrieveEvent/${idevent}`;
   return this.http.get<Event>(url);
 }
-uploadFile(file: File, title: string): Observable<any> {
-  const formData = new FormData();
+uploadEventPhoto(file:File): Observable<HttpEvent<any>> {
+  const formData: FormData = new FormData();
+
   formData.append('file', file);
-  formData.append('title', title);
 
-  return this.http.post<any>(`${this.apiUrl}/uploadPhoto`, formData);
-}
+  const req = new HttpRequest('POST', `${this.apiUrl}/uploadPhoto`, formData, {
+    reportProgress: true,
+    responseType: 'json'
+  });
 
-getFiles(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.apiUrl}/getFiles`);
+  return this.http.request(req);
 }
-getFilesWithInfo(): Observable<Event[]> {
-  return this.http.get<Event[]>(`${this.apiUrl}/getFilesWithInfo`);
-}
-getFileContent(photo: string): Observable<any> {
-  const url = `${this.apiUrl}/photo/${photo}`;
-  return this.http.get(url, { responseType: 'arraybuffer' });
+getEventPhoto(eventId: string): Observable<any> {
+  return this.http.get(`/api/event/${eventId}/photo`, { responseType: 'text' });
 }
 }

@@ -1,0 +1,47 @@
+.custom-card {
+    background-color: #c7eee9; 
+    border-color: #050505; 
+ 
+}
+.bg-turquoise {
+    background-color: #ecb212d3; /* Turquoise color code */
+    /* Add any additional styling here */
+}
+#sidenav-main {
+    background-image: linear-gradient(135deg, #d1ba387a,  #09b4ac); /* Nuance d'orange */
+  }
+  
+  #sidenav-main a {
+    color: #40E0D0; /* Turquoise */
+  }
+  
+  #sidenav-main a:hover {
+    color: #00CED1; /* Nuance plus claire de turquoise au survol */
+  }
+  .icon {
+  background-image: linear-gradient(135deg, #15a89a, #00CED1); /* Turquoise */
+}
+.custom-card-blue {
+    background-color: rgba(64, 224, 208, 0.205); /* Exemple de couleur de fond bleu clair */
+}
+
+body{
+    margin-top:20px;
+    background:#eee;
+    color: #708090;
+}
+.icon-1x {
+    font-size: 24px !important;
+}
+a{
+    text-decoration:none;    
+}
+.text-primary, a.text-primary:focus, a.text-primary:hover {
+    color: #0c0c0c!important;
+}
+.text-black, .text-hover-black:hover {
+    color: #000 !important;
+}
+.font-weight-bold {
+    font-weight: 700 !important;
+}

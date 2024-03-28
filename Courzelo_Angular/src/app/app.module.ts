@@ -66,7 +66,7 @@ import { CourseManagementComponent } from './course-management/course-management
 import { EventManagementComponent } from './event-management/event-management.component';
 import { EvaluationManagementComponent } from './evaluation-management/evaluation-management.component';
 import { ForumManagementComponent } from './forum-management/forum-management.component';
-import { QuestionModalComponent } from './Quiz/question-modal/question-modal.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -138,12 +138,10 @@ import { QuestionModalComponent } from './Quiz/question-modal/question-modal.com
     EventManagementComponent,
     EvaluationManagementComponent,
     ForumManagementComponent,
-    QuestionModalComponent
+    TestComponent,
+    
    
   
-  ],
-  entryComponents: [
-    QuestionModalComponent
   ],
   imports: [
     BrowserModule,

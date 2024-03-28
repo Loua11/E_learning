@@ -27,12 +27,23 @@
             <div class="col-sm-11">
               <div class="form-group">
                 <label for="photo">Photo</label>
-                <input type="file" id="photo" (change)="onFileSelected($event)" formControlName="photo" accept="image/*" placeholder="Photo">
-                <div *ngIf="isFieldInvalid('photo')" class="alert alert-danger">Photo is required.</div>
-
+                <input type="file" id="photo" (change)="onFileSelected($event)" accept="image/*">
               </div>
             </div>
-             
+            <div class="col-sm-11">
+              <div class="form-group">
+              <div *ngIf="selectedFile">
+                <label>Selected Image Preview:</label>
+                <img [src]="getSelectedFilePreview()" alt="Selected Image Preview" style="max-width: 200px;">
+              </div>  </div>
+            </div><div *ngIf="isFieldInvalid('photo')" class="alert alert-danger">Photo  is required.</div>
+
+                
+            
+              
+              
+              
+            
             <div class="form-group">
               <label for="duration">Duration</label>
               <input type="text" id="duration" formControlName="duration" class="form-control" placeholder="Duration">

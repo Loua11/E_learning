@@ -28,31 +28,20 @@
                     <td class="custom-cell">{{ l.title}}</td>
                     <td class="custom-cell">
                       <ng-container *ngIf="isImage(l)">
-                        <a class="text-success" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
-                          <i class="bi bi-file-image" style="font-size: 25px;"></i> {{ l.content }}
-                        </a>
+                        <img class="file-content" [src]="l.content.content" alt="Image">
                       </ng-container>
-                  
+                      
                       <ng-container *ngIf="isVideo(l)">
-                        <a class="text-danger" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
-                          <i class="bi bi-file-play" style="font-size: 25px;"></i> {{ l.content }}
-                        </a>
+                        <video class="file-content" controls>
+                          <source [src]="l.content.content" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
                       </ng-container>
-                  
+                      
                       <ng-container *ngIf="isDocument(l)">
-                        <a class="text-info" style="cursor: pointer;" (click)="downloadFile(l.content, l.title)">
-                          <i class="bi bi-file-text" style="font-size: 25px;"></i> {{ l.content }}
-                        </a>
+                        <!-- Afficher le contenu du document ici -->
+                        <p>{{ l.content.content }}</p>
                       </ng-container>
-                  
-                      <!-- Ajoutez d'autres conditions au besoin -->
-                  
-                      <p *ngIf="isSupported(l); else notSupported">
-                         {{ getFileContent(l.content) }}
-                      </p>
-                      <ng-template #notSupported>
-                        <p>Ce type de fichier n'est pas pris en charge.</p>
-                      </ng-template>
                     </td>
               
                   

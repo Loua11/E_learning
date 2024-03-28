@@ -1,0 +1,9 @@
+<div *ngFor="let lesson of lessons">
+    <h2>{{ lesson.title }}</h2>
+    <p>{{ lesson.content }}</p>
+    <button (click)="getFileContent(lesson.content)">Download Lesson</button>
+    <div *ngIf="fileContent">
+      <pre>{{ fileContent }}</pre> <!-- Affiche le contenu du fichier -->
+    </div>
+  </div>
+  

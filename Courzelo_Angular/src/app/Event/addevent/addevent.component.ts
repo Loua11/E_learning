@@ -15,16 +15,16 @@ import { Category, Event } from 'src/app/models/Event/event';
 export class AddEventComponent implements OnInit {
   eventForm: FormGroup;
   category = Object.values(Category);
+  selectedFile: File | undefined;
   event!:Event;
-  uploadedFileUrl!: string;
-  fileType!: string;
-
+  
   selectedFiles?: FileList;
   currentFile?: File;
   progress = 0;
   message = '';
-
+  
   fileInfos?: Observable<any>;
+
 
   constructor(
     private fb: FormBuilder,
@@ -43,39 +43,20 @@ export class AddEventComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    this.fileType = this.getFileType(file);
-    this.uploadedFileUrl = URL.createObjectURL(file);
-
-    // Récupérez le titre depuis le formulaire
-    const title = this.eventForm.get('title')?.value;
-
-    // Appel au service d'upload pour envoyer le fichier au backend
-    this.eventService.uploadFile(file, title).subscribe(
-      (response) => {
-        console.log('File uploaded successfully:', response);
-        // Mettez à jour votre modèle avec les données renvoyées par le backend si nécessaire
-      },
-      (error) => {
-        console.error('Error uploading file:', error);
-      }
-    );
-  }
-
-  getFileType(file: File): string {
-    const fileName = file.name.toLowerCase();
-    if (fileName.endsWith('.jpg') || fileName.endsWith('.png') || fileName.endsWith('.gif')) {
-      return 'image';
-    } else if (fileName.endsWith('.mp4') || fileName.endsWith('.avi')) {
-      return 'video';
-    } else if (fileName.endsWith('.pdf') || fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
-      return 'document';
-    } else {
-      return 'other';
+   
+    onFileSelected(event: any): void {
+      this.selectedFile = event.target.files[0];
     }
-  }
+    getSelectedFilePreview(): string {
+      if (this.selectedFile) {
+        return URL.createObjectURL(this.selectedFile);
+      }
+      return '';
+    }
+   
+ 
+  
+  
 
   goToList() {
     this.router.navigate(['/allevents']); // Replace '/allevents' with the URL of your event list
@@ -94,11 +75,14 @@ export class AddEventComponent implements OnInit {
         duration: this.eventForm.get('duration')?.value,
         debutdate: this.eventForm.get('debutdate')?.value,
         price: this.eventForm.get('price')?.value,
-        category: this.eventForm.get('category')?.value
+        category: this.eventForm.get('category')?.value,
       };
 
       if (newEvent.title !== null && newEvent.maxcapacity !== null && newEvent.duration !== null && newEvent.debutdate !== null && newEvent.price !== null && newEvent.category !== null) {
         // Add the photo to the new event
+        if (this.selectedFile) {
+          newEvent.photo = this.selectedFile.name;
+        }
 
         this.eventService.addEvent(newEvent).subscribe(
           () => {
