@@ -1,0 +1,51 @@
+<app-sidebar></app-sidebar>
+
+<br><br> <br><br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div> <!-- Colonne vide à gauche -->
+    <div class="col-md-8">
+      <div class="card custom-blue">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+                <span class="font-weight-bold " style="font-size: 1.5rem;color: rgb(8, 8, 8);">Class List</span>
+              </div>
+              <div class="ml-auto">
+                <a routerLink="/addComment"><i class="bi bi-patch-plus-fill text-black" style="font-size: 40px;"></i></a>
+              </div>
+            </div>
+ 
+            <div class="card-body">
+        <table  class="table table-hover text-center custom-table">
+          <thead>
+            <tr>
+          
+             
+              <th scope="col" class="custom-cell">Message</th>
+              <th scope="col" class="custom-cell">Date</th>
+              <th scope="col" class="custom-cell" >Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of comment">
+              
+              <td class="custom-cell">{{ c.message}}</td>
+            
+              <td class="custom-cell">{{c.datecomment}}</td>
+       
+              <td class="custom-cell"><a routerLink="/updateComment/{{ c.idComment }}"><i class="bi bi-pencil-square text-success" style="font-size: 15px;margin-left: 15px;"></i></a>
+
+                <a (click)="deleteComment(c.idComment)"><i class="bi bi-trash text-danger" style="font-size: 15px;margin-left: 15px;"></i></a>
+
+                <a routerLink="/comment-details/{{ c.idComment }}" ><i class="bi bi-chat-left-text" style="font-size: 15px;margin-left: 15px;"></i></a>
+            </tr>
+            
+            
+          </tbody>
+        </table>
+
+       
+ 
+      </div>
+    </div>
+

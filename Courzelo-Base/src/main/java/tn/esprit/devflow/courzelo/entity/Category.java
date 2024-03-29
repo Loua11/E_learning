@@ -1,0 +1,5 @@
+package tn.esprit.devflow.courzelo.entity;
+
+public enum Category {
+    CONFERENCE, TEAM_BUILDING_ACTIVITIE, COURSE_LAUNCH, VIRTUEL_TRAINING_SESSION, HACKATHON, VIRTUEL_RECRUITING_EVENT
+}

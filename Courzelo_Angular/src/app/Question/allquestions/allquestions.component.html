@@ -1,0 +1,58 @@
+<app-sidebar></app-sidebar>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<div class="content-wrapper white-background">
+  <br> <br> <br>
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+
+        <div class="col-md-8">
+          <div class="card custom-blue">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <span class="font-weight-bold" style="font-size: 1.5rem; color: rgb(8, 8, 8);">Question List</span>
+              </div>
+              <div class="ml-auto">
+                <a routerLink="/addQuestion"><i class="bi bi-patch-plus-fill text-black" style="font-size: 40px;"></i></a>
+              </div>
+            </div>
+ 
+            <div class="card-body">
+        <table  class="table table-hover text-center custom-table">
+          <thead>
+            <tr class="table-info">
+              <th scope="col" class="custom-cell">ID</th>
+              <th scope="col" class="custom-cell">Question Text</th>
+              <th scope="col" class="custom-cell">Correct Answer</th>
+              <th scope="col" class="custom-cell">Options</th>
+              <th scope="col" class="custom-cell">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let question of questions">
+              <td class="custom-cell">{{ question.idquestion }}</td>
+              <td class="custom-cell">{{ question.questionText }}</td>
+              <td class="custom-cell">{{ question.correctanswer }}</td>
+              <td class="custom-cell">
+                <ul>
+                  <li *ngFor="let option of question.options">{{ option }}</li>
+                </ul>
+              </td>
+              <td class="custom-cell">
+                <button type="button" class="btn btn-outline-success" routerLink="/updateQuestion/{{question.idquestion}}">
+                  <i class="fas fa-edit"></i> <!-- Icône de mise à jour -->
+                </button>
+                <button type="button" class="btn btn-outline-danger" (click)="deleteQuestion(question)">
+                  <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                </button>
+                <button type="button" class="btn btn-outline-info" routerLink="/showquestion/{{ question.idquestion}}">
+                  <i class="fas fa-eye"></i> <!-- Icône d'affichage -->
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+       
+      </div>
+    </div>

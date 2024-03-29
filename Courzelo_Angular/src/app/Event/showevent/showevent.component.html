@@ -1,0 +1,27 @@
+<app-sidebar></app-sidebar>
+<div class="content-wrapper white-background">
+  <br>
+  <br>
+  <div class="content">
+    <div class="container mt-5 mb-5 d-flex justify-content-center">
+      <div class="card px-1 py-4 turquoise-background position-relative">
+        <div class="card-header d-flex justify-content-center align-items-center">
+          <span class="font-weight-bold" style="font-size: 1.9rem; color: #d7a50deb;">Show Event</span>
+        </div>
+          <h2 class="text-center" style="color: black; font-weight: bold;">ID : {{eventDetails.idevent}}</h2>
+         
+<div *ngIf="eventDetails" style="color: black; font-weight: bold;">
+   
+  <p> Photo :   <img src="assets/uploads/{{eventDetails.photo }}" width="250" height="240" alt="Event image"></p>
+    <p> Max Capacity: {{ eventDetails.maxcapacity }}</p>
+    <p>Duration: {{ eventDetails.duration }}</p>
+    <p>Debut Date: {{ eventDetails.debutdate }}</p>
+    <p>Price: {{ eventDetails.price }}</p>
+  </div>
+  
+  <div *ngIf="!eventDetails">
+    <p>Loading event details...</p>
+  </div><a class="btn btn-link btn-lg position-absolute top-0 end-0" style="color: rgb(9, 141, 114);" routerLink="/allevents">
+    <i class="fas fa-arrow-right fa-2x"></i>
+  </a>
+        </div></div></div></div>

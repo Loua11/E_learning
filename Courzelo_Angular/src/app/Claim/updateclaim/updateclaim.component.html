@@ -1,0 +1,68 @@
+
+
+<app-sidebar></app-sidebar>
+<div class="content-wrapper  white-background">
+    
+    <br>
+    <br>
+    <div class="content">
+        <div class="container mt-5 mb-5 d-flex justify-content-center">
+            <div class="card px-1 py-4 turquoise-background">
+               
+          
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <span class="font-weight-bold" style="font-size: 1.5rem; color: rgb(8, 8, 8);">Update Claim</span>
+                  </div>
+                </div>
+        
+                <div class="card-body d-flex flex-column align-items-center">
+               
+                  <form  [formGroup]="updateForm" (submit)="updateClaim()" class="text-center custom-form">
+                    <div class="col-sm-11">
+                    <div class="form-group">
+                      <label>Title</label>
+                      <input type="text" formControlName="title" class="form-control" placeholder="title">
+                    </div>
+                </div>
+                <div class="col-sm-11">
+                    <div class="form-group">
+                      <label>Date Claim</label>
+                      <input type="date" formControlName="dateclaim" class="form-control" placeholder="dateclaim">
+                    </div>
+                </div>
+                 
+                <div class="col-sm-11">
+                    <div class="mb-4">
+                      <label for="status" class="form-label">Status</label>
+                      <select id="status" name="status" class="form-control" formControlName="status" required>
+                        <option value="" disabled selected>Choisissez une option</option>
+                        <option *ngFor="let status of status" [value]="status">{{ status }}</option>
+                      </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-11">
+                    <div class="mb-4">
+                      <label for="typeclaim" class="form-label">Claim Type</label>
+                      <select id="typeclaim" name="typeclaim" class="form-control" formControlName="typeclaim" required>
+                        <option value="" disabled selected>Choisissez une option</option>
+                        <option *ngFor="let typeclaim of typeclaim" [value]="typeclaim">{{ typeclaim }}</option>
+                      </select>
+                    </div>
+                </div>
+               
+                <div class="mt-3">
+                    <a (click)="updateClaim()" class="btn btn-success mr-5" routerLink="/allComment">
+                        <i class="bi bi-pencil-square " style="font-size: 24px;"></i> 
+                    </a>
+                    <a routerLink="/allComment" class="btn btn-danger"><i class="fas fa-times" style="font-size: 35px;"></i></a>
+                </div>
+           
+                  </form>
+         
+                </div>       
+        
+              
+           
+            </div>

@@ -1,0 +1,49 @@
+<app-sidebar></app-sidebar>
+
+<div class="content-wrapper  white-background">
+
+    <br>
+    <br>
+    <div class="content">
+        <div class="container mt-5 mb-5 d-flex justify-content-center">
+            <div class="card px-1 py-4 turquoise-background">
+
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <span class="font-weight-bold" style="font-size: 1.5rem; color: rgb(8, 8, 8);">Add Comment</span>
+                    </div>
+                </div>
+
+                <div class="card-body d-flex flex-column align-items-center">
+<form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="text-center custom-form">
+    <div class="col-sm-11">
+    <div class="form-group">
+        <label>Message</label>
+        <input type="text" formControlName="message" class="form-control" placeholder="message">
+        <div *ngIf="isFieldInvalid('message')" class="alert alert-danger">Please entre your comment.</div>
+    </div>
+    </div>
+   
+    <div class="col-sm-11">
+
+    <div class="form-group">
+        <label for="datecomment">Date:</label>
+  <input type="date" id="datecomment" class="form-control" formControlName="datecomment">
+    </div>
+    </div>
+
+    <div class="form-group">
+        <a (click)="onSubmit()" class="btn btn-outline-success" routerLink="/allComment">
+            <i class="fas fa-check" style="font-size: 15px;"></i> 
+        </a>
+       
+        <a class="btn btn-outline-danger"routerLink="/allComment">
+          <i class="fas fa-times" style="font-size: 15px;"></i>
+        </a>
+    </div>
+
+    
+
+</form>
+ 

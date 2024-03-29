@@ -1,0 +1,61 @@
+<app-sidebar></app-sidebar>
+<br><br> <br><br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div> <!-- Colonne vide à gauche -->
+    <div class="col-md-8">
+      <div class="card custom-blue">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+                <span class="font-weight-bold " style="font-size: 1.5rem;color: rgb(8, 8, 8);">Lessons List</span>
+              </div>
+              <div class="ml-auto">
+                <a routerLink="/addLesson"><i class="bi bi-patch-plus-fill text-black" style="font-size: 40px;"></i></a>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <table class="table table-hover text-center custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="custom-cell">Title</th>
+                    <th scope="col" class="custom-cell">Content</th>
+                    <th scope="col" class="custom-cell">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let l of lesson">
+                    <td class="custom-cell">{{ l.title}}</td>
+                    <td class="custom-cell">
+                      <ng-container *ngIf="isImage(l)">
+                        <img class="file-content" [src]="l.content.content" alt="Image">
+                      </ng-container>
+                      
+                      <ng-container *ngIf="isVideo(l)">
+                        <video class="file-content" controls>
+                          <source [src]="l.content.content" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                      </ng-container>
+                      
+                      <ng-container *ngIf="isDocument(l)">
+                        <!-- Afficher le contenu du document ici -->
+                        <p>{{ l.content.content }}</p>
+                      </ng-container>
+                    </td>
+              
+                  
+                    <td class="custom-cell">
+                      <a routerLink="/updateLesson/{{ l.idlesson }}"><i class="bi bi-pencil-square text-success" style="font-size: 15px;margin-left: 15px;"></i></a>
+                      <a (click)="deleteLesson(l.idlesson)"> <i class="bi bi-trash text-danger" style="font-size: 15px;margin-left: 15px;"></i></a>
+                      <a routerLink="/lesson-details/{{ l.idlesson }}"><i class="bi bi-chat-left-text" style="font-size: 15px;margin-left: 15px;"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>

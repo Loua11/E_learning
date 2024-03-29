@@ -1,0 +1,30 @@
+<app-sidebar></app-sidebar>
+<div class="content-wrapper white-background">
+  <br>
+  <br>
+  <div class="content">
+    <div class="container mt-5 mb-5 d-flex justify-content-center">
+      <div class="card px-1 py-4 turquoise-background">
+        <div class="card-header d-flex justify-content-center align-items-center">
+          <span class="font-weight-bold" style="font-size: 1.9rem; color: #d7a50deb;">Show Speaker</span>
+        </div>
+        
+        
+        <div class="card-body d-flex flex-column align-items-center">
+        <div class="form-container">
+          <h2 class="text-center" style="color: black; font-weight: bold;">ID : {{speakerDetails.idspeaker}}</h2>
+<div *ngIf="speakerDetails" style="color: black; font-weight: bold;">
+  <p>Name: {{ speakerDetails.name }}</p>
+    <p>Title: {{ speakerDetails.title }}</p>
+    <p>Bio: {{ speakerDetails.bio}}</p>
+   
+  </div>
+  
+  <div *ngIf="!speakerDetails">
+    <p>Loading speaker details...</p>
+  </div>
+        </div>
+        <a class="btn btn-link btn-lg position-absolute top-0 end-0" style="color: rgb(9, 141, 114);" routerLink="/allspeakers">
+          <i class="fas fa-arrow-right fa-2x"></i>
+        </a>
+      </div></div></div>

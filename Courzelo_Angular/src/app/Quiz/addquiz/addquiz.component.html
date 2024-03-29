@@ -1,0 +1,87 @@
+<app-sidebar></app-sidebar>
+<div class="content-wrapper  white-background">
+
+  <br>
+  <br>
+  <div class="content">
+      <div class="container mt-5 mb-5 d-flex justify-content-center">
+          <div class="card px-1 py-4 turquoise-background">
+
+
+              <div class="card-header d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                      <span class="font-weight-bold" style="font-size: 1.5rem; color: rgb(8, 8, 8);">Add Quiz</span>
+                  </div>
+              </div>
+
+              <div class="card-body d-flex flex-column align-items-center">
+          <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="text-center custom-form">
+            <div class="col-sm-11">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" formControlName="description" class="form-control" placeholder="Description"></textarea>
+              <div *ngIf="isFieldInvalid('description')" class="alert alert-danger">Description is required.</div>
+          </div>
+        </div>
+        <div class="col-sm-11">
+            <div class="form-group">
+              <label for="duration">Duration</label>
+              <input type="text" id="duration" formControlName="duration" class="form-control" placeholder="Duration">
+              <div *ngIf="isFieldInvalid('duration')" class="alert alert-danger">Duration is required.</div>
+            </div>
+            </div>
+            <div class="col-sm-11">
+            <div class="form-group">
+              <label for="maxscore">MaxScore</label>
+              <input type="text" id="maxScore" formControlName="maxScore" class="form-control" placeholder="MaxScore">
+              <div *ngIf="isFieldInvalid('maxScore')" class="alert alert-danger">Max Score is required.</div>
+            </div>
+            </div>
+            <div class="col-sm-11">
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-check"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger" routerLink="/allquizzes">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            </div>         
+            <div class="col-sm-11">
+              <div class="form-group">
+                <button class="btn btn-success" (click)="openModel()">Open Model</button>
+              </div>
+            </div>
+
+            
+         
+          </form>
+        </div>
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Select Questions</h5>
+       
+      </div>
+      <ng-template #modalContent>
+
+        <tr *ngFor="let question of questions">
+          <td>
+            <input type="checkbox" (change)="checkBoxChange(question.idquestion!)">
+          </td>
+          <td class="custom-cell">{{ question.questionText }}</td>           
+         </tr>
+
+        </ng-template>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModel()" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveQuestions()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+
