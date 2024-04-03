@@ -1,5 +1,6 @@
 package tn.esprit.devflow.courzelo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -22,6 +23,8 @@ public class Speaker {
     String title;
     String bio;
     @DBRef
+    @JsonIgnore
+
     List<Event> events ;
 
 }

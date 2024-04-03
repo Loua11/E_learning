@@ -6,11 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.devflow.courzelo.entity.Event;
+import tn.esprit.devflow.courzelo.entity.Question;
 import tn.esprit.devflow.courzelo.entity.Quiz;
-import tn.esprit.devflow.courzelo.repository.QuizRepository;
+import tn.esprit.devflow.courzelo.entity.QuizRequest;
+import tn.esprit.devflow.courzelo.repository.QuestionRepository;
 import tn.esprit.devflow.courzelo.services.IQuizService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +22,8 @@ import java.util.UUID;
 public class QuizController {
     @Autowired
     IQuizService quizserv;
+    @Autowired
+    QuestionRepository questionRepository;
 
     @PostMapping("/addQuiz")
     public Quiz addQuiz(@RequestBody Quiz q) {
@@ -62,13 +68,40 @@ public class QuizController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Quiz> addQuizWithQuestions(@RequestBody Quiz quiz) {
-        Quiz addedQuiz = quizserv.addQuizWithQuestions(quiz);
-        if (addedQuiz != null) {
-            return ResponseEntity.ok(addedQuiz);
-        } else {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<Quiz> addQuizWithQuestions(@RequestBody QuizRequest quizRequest) {
+        List<String> questionIds = quizRequest.getQuestions();
+        List<Question> questions = new ArrayList<>();
+        boolean allQuestionsExist = true;
+        for (String questionId : questionIds) {
+            Optional<Question> questionOptional = questionRepository.findById(questionId);
+            if (questionOptional.isEmpty()) {
+                allQuestionsExist = false;
+                break;
+            }
+
+            questions.add(questionOptional.get());
+
+
+
         }
+        if (allQuestionsExist) {
+            Quiz quiz =new Quiz();
+            quiz.setDescription(quizRequest.getDescription());
+            quiz.setDuration(quizRequest.getDuration());
+            quiz.setMaxScore(quizRequest.getMaxScore());
+
+
+
+            quiz.setQuestions(questions);
+            Quiz addedQuiz = quizserv.addQuizWithQuestions(quiz);
+            return ResponseEntity.ok(addedQuiz);
+
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
+
     }
 
 

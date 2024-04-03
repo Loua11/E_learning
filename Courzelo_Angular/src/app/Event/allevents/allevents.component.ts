@@ -23,10 +23,10 @@ export class AlleventsComponent implements OnInit {
   constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
-    this.retrieveAllEvents();  
-    
+    this.retrieveAllEvents();
+
   }
-  
+
   selectFile(event:any): void{
     this.selectedFiles = event.target.files;
 
@@ -37,7 +37,7 @@ export class AlleventsComponent implements OnInit {
         this.events = data;
         // Récupérer les photos pour chaque événement
         this.events.forEach(event => {
-          if (event && event.idevent && typeof event.idevent === 'string') { 
+          if (event && event.idevent && typeof event.idevent === 'string') {
             const idevent = event.idevent as string; // Assurez-vous que idevent est de type string
             // Vérifier si event et event.idevent sont définis et de type string
             this.eventService.getEventPhoto(idevent).subscribe(
@@ -56,7 +56,7 @@ export class AlleventsComponent implements OnInit {
       }
     );
   }
-  
+
 
 
 
@@ -64,7 +64,7 @@ export class AlleventsComponent implements OnInit {
     if (idevent) {
       this.eventService.deleteEvent(idevent).subscribe(
         () => {
-          console.log(`Event with ID ${idevent} deleted successfully.`);
+        //  console.log(`Event with ID ${idevent} deleted successfully.`);
           // Actualiser la liste des événements après la suppression
           this.retrieveAllEvents();
         },
@@ -75,7 +75,7 @@ export class AlleventsComponent implements OnInit {
     }
   }
 
- 
 
-  
+
+
 }

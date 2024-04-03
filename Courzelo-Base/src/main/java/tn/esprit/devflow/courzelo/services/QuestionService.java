@@ -42,4 +42,9 @@ questionrepo.deleteById(idquestion);
         return  q;
 
     }
+
+    @Override
+    public Question get(String questionsIde) {
+        return this.questionrepo.findById(questionsIde).get();
+    }
 }

@@ -4,4 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import tn.esprit.devflow.courzelo.entity.Speaker;
 
 public interface SpeakerRepository extends MongoRepository<Speaker,String> {
+    Speaker findSpeakerByName(String name);
 }

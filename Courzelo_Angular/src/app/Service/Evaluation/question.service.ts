@@ -30,7 +30,17 @@ export class QuestionService {
 
   updateQuestion(idquestion: any,updatedQuestion: any): Observable<any> {
    return this.http.put(`${this.apiUrl}/updateQuestion/${idquestion}`,updatedQuestion);
-  
+
+  }
+   evalQuiz(quizId: string,questions:any)
+  {
+    return this.http.post(`${this.apiUrl}/eval-quiz/${quizId}`,questions);
+  }
+  getQuestionsOfQuiz(qid:any)
+
+  {
+    return this.http.get(`${this.apiUrl}/question/quiz/${qid}`);
+
   }
 
 }

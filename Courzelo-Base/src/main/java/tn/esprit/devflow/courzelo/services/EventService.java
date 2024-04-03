@@ -5,13 +5,16 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.devflow.courzelo.entity.Category;
 import tn.esprit.devflow.courzelo.entity.Class;
 import tn.esprit.devflow.courzelo.entity.Event;
+import tn.esprit.devflow.courzelo.entity.Speaker;
 import tn.esprit.devflow.courzelo.repository.EventRepository;
+import tn.esprit.devflow.courzelo.repository.SpeakerRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,15 +23,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class EventService implements IEventService {
 @Autowired
     EventRepository eventrepo;
+    @Autowired
+    SpeakerRepository speakerrepo;
     @Autowired
     private Environment env;
     @Override
@@ -67,25 +69,29 @@ public class EventService implements IEventService {
 
     }
 
-    public Event uploadPhoto(MultipartFile file, String title) {
-        try {
-            // Normalize file name
-            String photo = StringUtils.cleanPath(file.getOriginalFilename());
-            Path fileStorageLocation = Paths.get(env.getProperty("file.upload-dir"))
-                    .toAbsolutePath().normalize();
-            Path targetLocation = fileStorageLocation.resolve(photo);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            // Créer une nouvelle leçon avec le contenu du fichier et le titre, puis sauvegarder dans la base de données
-            Event e = new Event(photo);
-            e.setTitle(title);  // Ajoutez cette ligne pour mettre à jour le titre
-            return eventrepo.save(e);
-        } catch (Exception ex) {
-            System.out.println("Exception: " + ex.getMessage());
-            ex.printStackTrace();
-            return null;
+@Override
+public Event addEventWithSpeaker(Event event, String name) {
+
+        Speaker speaker = speakerrepo.findSpeakerByName(name);
+
+        // Associer l'Event au Speaker
+        event.setSpeaker(speaker);
+
+
+        // Ajouter l'événement à la liste des événements du speaker et sauvegarder
+        if (speaker.getEvents() == null) {
+            speaker.setEvents(new ArrayList<>());
         }
+        speaker.getEvents().add(event);
+        return eventrepo.save(event);
+
+
     }
 
 
-}
+
+
+    }
+
+

@@ -1,5 +1,9 @@
 package tn.esprit.devflow.courzelo.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -32,9 +36,9 @@ public class Event {
     @DBRef
     List<EventRegistration> eventRegs;
     @DBRef
+    @JsonIgnore
     Speaker speaker;
 
-    public Event(String photo) {
-        this.photo = photo;
-    }
+
+
 }

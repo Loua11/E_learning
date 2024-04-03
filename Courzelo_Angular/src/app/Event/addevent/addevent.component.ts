@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ClaimService } from 'src/app/Service/Claim/claim.service';
 import { EventService } from 'src/app/Service/Event/event.service';
+import { SpeakerService } from 'src/app/Service/Event/speaker.service';
 import { Category, Event } from 'src/app/models/Event/event';
+import { Speaker } from 'src/app/models/Event/speaker';
 
 @Component({
   selector: 'app-add-class',
@@ -17,6 +19,8 @@ export class AddEventComponent implements OnInit {
   category = Object.values(Category);
   selectedFile: File | undefined;
   event!:Event;
+  speakers!: Speaker[];
+
   
   selectedFiles?: FileList;
   currentFile?: File;
@@ -29,7 +33,8 @@ export class AddEventComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private speakerService : SpeakerService
   ) {
     this.eventForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,7 +43,8 @@ export class AddEventComponent implements OnInit {
       debutdate: ['', Validators.required],
       price: ['', Validators.required],
       category: ['', Validators.required],
-      photo: ['']
+      photo: [''],
+      namee:['']
     });
   }
 
@@ -54,7 +60,10 @@ export class AddEventComponent implements OnInit {
       return '';
     }
    
- 
+ Speakerrows = [
+    this.speakerService.getAll().subscribe(data => this.speakers = data)
+   
+  ];
   
   
 
@@ -76,6 +85,8 @@ export class AddEventComponent implements OnInit {
         debutdate: this.eventForm.get('debutdate')?.value,
         price: this.eventForm.get('price')?.value,
         category: this.eventForm.get('category')?.value,
+        namee: this.eventForm.get('namee')?.value,
+
       };
 
       if (newEvent.title !== null && newEvent.maxcapacity !== null && newEvent.duration !== null && newEvent.debutdate !== null && newEvent.price !== null && newEvent.category !== null) {
@@ -83,8 +94,8 @@ export class AddEventComponent implements OnInit {
         if (this.selectedFile) {
           newEvent.photo = this.selectedFile.name;
         }
-
-        this.eventService.addEvent(newEvent).subscribe(
+        if (newEvent.namee !== undefined) { 
+        this.eventService.addEvent(newEvent, name).subscribe(
           () => {
             console.log('Event added successfully!');
             this.router.navigate(['/allevents']);
@@ -92,7 +103,10 @@ export class AddEventComponent implements OnInit {
           (error) => {
             console.error('Error adding event', error);
           }
-        );
+        );}
+        else {
+          console.error('Speaker name is undefined. Cannot add event.');
+        }
       } else {
         console.log('Form values are null. Cannot add event.');
       }

@@ -10,10 +10,11 @@ export class Event {
     debutdate ?: Date;
     price ?: boolean;
     category ?: Category;
-  
+  namee?:String;
       
    
   }
+
     export enum Category{
       CONFERENCE=' CONFERENCE'
       , TEAM_BUILDING_ACTIVITIE = 'TEAM_BUILDING_ACTIVITIE', 

@@ -2,6 +2,7 @@ package tn.esprit.devflow.courzelo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Quiz {
     String description;
     int  duration;
     int maxScore ;
+    @JsonManagedReference
 
 
     @DBRef

@@ -1,5 +1,6 @@
 package tn.esprit.devflow.courzelo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import groovy.transform.AutoClone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,7 @@ import tn.esprit.devflow.courzelo.services.IEventService;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -70,19 +68,18 @@ public class EventController {
         return eventserv.retrieveEvent(idevent);
 
     }
-    @PostMapping(value = "/uploadPhoto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Event> uploadphoto(@RequestParam("file") MultipartFile file,
-                                             @RequestParam("title") String title) {
-        Event uploadphoto = eventserv.uploadPhoto(file, title);
-        if (uploadphoto != null) {
-            return ResponseEntity.ok(uploadphoto);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    @PostMapping("/addEventwithSpeaker/{name}")
+    public Event addEventwithSpeaker(@RequestBody Event e, @PathVariable String name) {
+
+
+
+        return eventserv.addEventWithSpeaker(e,name);
     }
 
 
-    }
+
+
+}
 
 
 

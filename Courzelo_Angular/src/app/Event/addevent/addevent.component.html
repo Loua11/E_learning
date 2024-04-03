@@ -82,6 +82,10 @@
               </select>
               <div *ngIf="isFieldInvalid('category')" class="alert alert-danger">Category is required.</div>
             </div>
+            <select class="form-control" id="namee" formControlName="namee">
+              <option *ngFor="let s of speakers" [value]="s.name">{{ s.name }}</option>
+            </select>
+            
 
             <div class="form-group">
               <button type="submit" class="btn btn-outline-success">

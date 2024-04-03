@@ -21,9 +21,12 @@ export class EventService {
   }
   
     
-    addEvent(data: Event): Observable<any> {
-      return this.http.post(`${this.apiUrl}/addEvent`, data);
-  }
+  
+  addEvent(event: Event, name: any|  undefined): Observable<any> {
+    return this.http.post(`${this.apiUrl}/addEventwithSpeaker/${name}`, event);
+}
+
+      
   deleteEvent(id: string): Observable<any> {
   return this.http.delete(`${this.apiUrl}/deleteEvent/${id}`);
 }

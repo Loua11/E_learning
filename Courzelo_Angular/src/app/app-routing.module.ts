@@ -55,8 +55,13 @@ import { EvaluationManagementComponent } from './evaluation-management/evaluatio
 import { EventManagementComponent } from './event-management/event-management.component';
 import { ForumManagementComponent } from './forum-management/forum-management.component';
 import { TestComponent } from './test/test.component';
+import {StartquizComponent} from "./Quiz/startquiz/startquiz.component";
+import {TestquizComponent} from "./Quiz/testquiz/testquiz.component";
+import {InstructionComponent} from "./Quiz/instruction/instruction.component";
 
 const routes: Routes = [
+
+
   {path:"back",component:BackComponent},
   {path:"front",component:FrontComponent},
   {path:"login",component:LoginComponent},
@@ -85,7 +90,7 @@ const routes: Routes = [
   { path: 'updateLesson/:id', component: UpdateLessonComponent },
   {path: 'module-details/:id', component:DetailModuleComponent},
   { path: 'updateModule/:id', component: UpdateModuleComponent },
-  
+
   {path:'allevents', component:AlleventsComponent},
   { path: 'addEvent', component: AddEventComponent },
   { path: 'addSpeaker', component: AddspeakerComponent },
@@ -114,12 +119,10 @@ const routes: Routes = [
   { path: 'tt', component:TestComponent},
   { path: 'content/:fileName', component: TestComponent },
   { path: 'dashboars', component:SidebarComponent},
-  
-
-
-  
-
-  { path: '**', component:NotfoundComponent},
+  {path: 'start/:qid',component: StartquizComponent},
+  {path: 'test',component: TestquizComponent},
+  {path: 'instruction/:qid',component: InstructionComponent },
+  {path: '**', component:NotfoundComponent},
 ];
 
 @NgModule({

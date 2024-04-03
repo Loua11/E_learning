@@ -1,0 +1,42 @@
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-card class="mt20">
+          <mat-card-header>
+            <mat-card-title>Read the instruction of this page carefully</mat-card-title>
+            <mat-card-subtitle>One step more to go</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="ml20">
+
+            <h1>{{quizz.description}}</h1>
+            <mat-divider></mat-divider>
+            <br>
+            <h1>Important Instructions</h1>
+            <ul>
+              <li>This quizz is only for practise purpose .</li>
+              <li>You have to submit quiz with in  <b> {{quizz.numberOfQuestions *2}} Minutes  . </b></li>
+              <li>You can attemp the quizz any number of time</li>
+              <li>There are <b> {{quizz.numberOfQuestions}}  questions </b> in this quiz</li>
+              <li>Each questions carries <b>{{quizz.maxMarks / quizz.numberOfQuestions}}</b> marks.No negative marking for wrong ones</li>
+              <li>All questions is QCM Types</li>
+            </ul>
+            <mat-divider></mat-divider>
+            <br><h1>Attempting Quizz</h1>
+            <ul>
+              <li>Click <b>Start</b> button to start the quiz</li>
+              <li>The time will satrt the moment you click the start test button</li>
+              <li>You can resume this quiz ,if interrpted due to any reason</li>
+              <li>Scroll down to move to the  next question.</li>
+              <li>Click on submit Quizz button to move next question.</li>
+              <li>Report of the test is automatically generated in the form of PDF copy</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button class=" " mat-raised-button color="primary" (click)="startQuiz()">Start Quiz</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

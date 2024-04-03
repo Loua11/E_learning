@@ -11,4 +11,6 @@ public interface IQuestionService {
     public Question updateQuestion(Question qu , String idquestion );
     public void deleteQuestion(String idquestion);
     public Question retrieveQuestion (String idquestion);
+    public Question get(String questionsIde);
+
 }

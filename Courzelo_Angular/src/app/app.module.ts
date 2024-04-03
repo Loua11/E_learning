@@ -67,6 +67,17 @@ import { EventManagementComponent } from './event-management/event-management.co
 import { EvaluationManagementComponent } from './evaluation-management/evaluation-management.component';
 import { ForumManagementComponent } from './forum-management/forum-management.component';
 import { TestComponent } from './test/test.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { StartquizComponent } from './Quiz/startquiz/startquiz.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from "@angular/material/card";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDividerModule} from "@angular/material/divider";
+import { TestquizComponent } from './Quiz/testquiz/testquiz.component';
+import { InstructionComponent } from './Quiz/instruction/instruction.component';
+
+
 
 @NgModule({
   declarations: [
@@ -77,7 +88,7 @@ import { TestComponent } from './test/test.component';
     FooterrComponent,
     HeaderrComponent,
     LoginComponent,
-    
+
   AllClassComponent,
   AddClassComponent,
   AddCommentComponent,
@@ -96,7 +107,7 @@ import { TestComponent } from './test/test.component';
     AddProgramComponent,
     AllProgramComponent,
     UpdateClassComponent,
-    
+
     DetailClassComponent,
     UpdateProgramComponent,
     DetailProgramComponent,
@@ -110,8 +121,8 @@ import { TestComponent } from './test/test.component';
     UpdateCourseComponent,
     DetailCommentComponent,
     UpdateCommentComponent,
-    
-    AddEventComponent, 
+
+    AddEventComponent,
     AlleventsComponent ,
     ShoweventComponent,
     AddspeakerComponent,
@@ -139,17 +150,27 @@ import { TestComponent } from './test/test.component';
     EvaluationManagementComponent,
     ForumManagementComponent,
     TestComponent,
-    
-   
-  
+    StartquizComponent,
+    TestquizComponent,
+    InstructionComponent,
+
+
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
- 
+    ReactiveFormsModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatDividerModule,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.devflow.courzelo.entity.Category;
 import tn.esprit.devflow.courzelo.entity.Class;
 import tn.esprit.devflow.courzelo.entity.Event;
+import tn.esprit.devflow.courzelo.entity.Speaker;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ public interface IEventService {
     public Event updateEvent(Event e );
     public void deleteEvent(String idevent);
     public Event retrieveEvent (String idevent);
-    public Event uploadPhoto(MultipartFile file, String title) ;
+
+    public Event addEventWithSpeaker(Event event, String name) ;
+
 
     }
